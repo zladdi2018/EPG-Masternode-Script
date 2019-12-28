@@ -377,31 +377,31 @@ clear
 }
 
 function set_scripts_and_aliases() {
-cat << EOF > /root/encocoin-general-info
+cat << EOF > /root/epgc-general-info
 echo -e "\n\n${BLUE}=======================================================================================================${NC}\n"
 echo -e "${GREEN}$PROJECT_NAME General Info: ${NC}"
 $COIN_CLI getinfo
 echo -e "\n${BLUE}=======================================================================================================${NC}\n"
 EOF
-chmod +x /root/encocoin-general-info
+chmod +x /root/epgc-general-info
 
-cat << EOF > /root/encocoin-fee-info
+cat << EOF > /root/epgc-fee-info
 echo -e "\n\n${BLUE}=======================================================================================================${NC}\n"
 echo -e "${GREEN}$PROJECT_NAME Fee Info: ${NC}"
 $COIN_CLI getfeeinfo 100
 echo -e "\n${BLUE}=======================================================================================================${NC}\n"
 EOF
-chmod +x /root/encocoin-fee-info
+chmod +x /root/epgc-fee-info
 
-cat << EOF > /root/encocoin-networkinfo
+cat << EOF > /root/epgc-networkinfo
 echo -e "\n\n${BLUE}=======================================================================================================${NC}\n"
 echo -e "${GREEN}$PROJECT_NAME Network Info: ${NC}"
 $COIN_CLI getnetworkinfo
 echo -e "\n${BLUE}=======================================================================================================${NC}\n"
 EOF
-chmod +x /root/encocoin-networkinfo
+chmod +x /root/epgc-networkinfo
 
-cat << EOF > /root/encocoin-masternode-stats
+cat << EOF > /root/epgc-masternode-stats
 echo -e "\n\n${BLUE}=======================================================================================================${NC}\n"
 echo -e "${GREEN}Last Block: ${NC}"
 $COIN_CLI getblockcount
@@ -411,15 +411,15 @@ echo -e "\n${GREEN}Masternode Status: ${NC}"
 $COIN_CLI getmasternodestatus
 echo -e "\n${BLUE}=======================================================================================================${NC}\n"
 EOF
-chmod +x /root/encocoin-masternode-stats
+chmod +x /root/epgc-masternode-stats
 
 cp /root/.bashrc /root/.bashrc.backup
-sed '/feestats/d' /root/.bashrc | sed '/networkstats/d' | sed '/mnstats/d' | sed '/encocoininfo/d' > /root/tmp
+sed '/feestats/d' /root/.bashrc | sed '/networkstats/d' | sed '/mnstats/d' | sed '/epgcinfo/d' > /root/tmp
 mv /root/tmp /root/.bashrc
-echo -e "alias encocoininfo='/root/encocoin-networkinfo'" >> /root/.bashrc
-echo -e "alias feestats='/root/encocoin-fee-info'" >> /root/.bashrc
-echo -e "alias networkstats='/root/encocoin-networkinfo'" >> /root/.bashrc
-echo -e "alias mnstats='/root/encocoin-masternode-stats'" >> /root/.bashrc
+echo -e "alias epgcinfo='/root/epgc-general-info'" >> /root/.bashrc
+echo -e "alias feestats='/root/epgc-fee-info'" >> /root/.bashrc
+echo -e "alias networkstats='/root/epgc-networkinfo'" >> /root/.bashrc
+echo -e "alias mnstats='/root/epgc-masternode-stats'" >> /root/.bashrc
 exec bash
 }
 
@@ -438,7 +438,7 @@ function important_information() {
  echo -e "Use ${RED}$COIN_CLI getmasternodestatus${NC} to check your MN Status."
  echo -e "Use ${RED}$COIN_CLI mnsync status${NC} to see if the node is synced with the network."
  echo -e "Use ${RED}$COIN_CLI help${NC} for help."
- echo -e "You can also use ${RED}encocoininfo${NC}, ${RED}feestats${NC}, ${RED}networkstats${NC} and ${RED}mnstats${NC} commands for a nice looking infos.${NC}"
+ echo -e "You can also use ${RED}epgcinfo${NC}, ${RED}feestats${NC}, ${RED}networkstats${NC} and ${RED}mnstats${NC} commands for a nice looking infos.${NC}"
  echo -e "${BLUE}================================================================================================================================${NC}"
 # if [[ -n $SENTINEL_REPO  ]]; then
 #  echo -e "${RED}Sentinel${NC} is installed in ${RED}/root/sentinel_$COIN_NAME${NC}"
