@@ -101,8 +101,6 @@ function download_node() {
   cp $COIN_CLI /root/
   cd ~
   rm -rf $TMP_FOLDER
-  echo "waiting for debugging the error"
-  sleep 30
 #   clear
 }
 
