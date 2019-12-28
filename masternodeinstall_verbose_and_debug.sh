@@ -87,13 +87,13 @@ function download_node() {
   cd $TMP_FOLDER
 #  wget -q $COIN_TGZD
   wget -q $COIN_TGZ
-  compile_error
+  #compile_error
   tar jxvf $COIN_TGZ >/dev/null 2>&1
   mv epgc/epgc-cli .
   mv epgc/epgc-tx .
   mv epgc/epgcd .
   rm -fr epgc/
-  compile_error
+  #compile_error
 #   cd linux
   chmod +x $COIN_DAEMON
   chmod +x $COIN_CLI
