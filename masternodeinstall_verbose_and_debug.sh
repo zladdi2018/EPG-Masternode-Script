@@ -7,9 +7,9 @@ COIN_DAEMON='epgcd'
 COIN_CLI='epgc-cli'
 COIN_PATH='/usr/local/bin/'
 if [[ $(lsb_release -d) != *16.04* ]]; then
-	COIN_TGZ='https://github.com/bedri/EPS-Masternode-Script/raw/master/epgc_ubuntu_16.04_binaries.tar.bz2'
+	COIN_TGZP='https://github.com/bedri/EPS-Masternode-Script/raw/master/epgc_ubuntu_16.04_binaries.tar.bz2'
 elif [[ $(lsb_release -d) != *18.04* ]]; then
-	COIN_TGZ='https://github.com/bedri/EPS-Masternode-Script/raw/master/epgc_ubuntu_18.04_binaries.tar.bz2'
+	COIN_TGZP='https://github.com/bedri/EPS-Masternode-Script/raw/master/epgc_ubuntu_18.04_binaries.tar.bz2'
 fi
 COIN_TGZ=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
 COIN_NAME='encocoinplus'
@@ -86,7 +86,7 @@ function download_node() {
   sleep 10
   cd $TMP_FOLDER
   sleep 10
-  wget $COIN_TGZ
+  wget $COIN_TGZP
   sleep 10
   #compile_error
   tar jxvf $COIN_TGZ
