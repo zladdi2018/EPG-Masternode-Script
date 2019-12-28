@@ -1,17 +1,20 @@
 #!/bin/bash
 
 TMP_FOLDER=$(mktemp -d)
-CONFIG_FILE='encocoin.conf'
-CONFIGFOLDER='/root/.encocoin'
-COIN_DAEMON='encocoind'
-COIN_CLI='encocoin-cli'
+CONFIG_FILE='epgc.conf'
+CONFIGFOLDER='/root/.epgc'
+COIN_DAEMON='epgcd'
+COIN_CLI='epgc-cli'
 COIN_PATH='/usr/local/bin/'
-COIN_TGZC='https://bitbucket.org/encocoinxnk/encocoin-new-release/downloads/epgc.zip'
-#COIN_TGZD='https://github.com/Encocoin/encocoin-posmn/releases/download/v2.0.0.0/encocoin-daemon-linux.tar'
-COIN_ZIPC=$(echo $COIN_TGZC | awk -F'/' '{print $NF}')
+if [[ $(lsb_release -d) != *16.04* ]]; then
+	COIN_TGZ='https://github.com/bedri/EPS-Masternode-Script/raw/master/epgc_ubuntu_16.04_binaries.tar.bz2'
+elif [[ $(lsb_release -d) != *18.04* ]]; then
+	COIN_TGZ='https://github.com/bedri/EPS-Masternode-Script/raw/master/epgc_ubuntu_18.04_binaries.tar.bz2'
+fi
+COIN_ZIPC=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
 COIN_ZIPD=$(echo $COIN_TGZD | awk -F'/' '{print $NF}')
-COIN_NAME='encocoin'
-PROJECT_NAME='Encocoin PoS (XNK-PoS)'
+COIN_NAME='encocoinplus'
+PROJECT_NAME='Encocoinplus EPG - Encocoin Payment Guarantee'
 COIN_EXPLORER='http://explorer.encocoin.net'
 COIN_PORT=12044
 RPC_PORT=12043
@@ -83,13 +86,12 @@ function download_node() {
   echo -e "${GREEN}Downloading and Installing VPS ${BLUE}$PROJECT_NAME ${GREEN}Daemon${NC}"
   cd $TMP_FOLDER
 #  wget -q $COIN_TGZD
-  wget -q $COIN_TGZC
+  wget -q $COIN_TGZ
   compile_error
-#   unzip $COIN_ZIP
-#  tar xvf $COIN_ZIPD >/dev/null 2>&1
-  unzip $COIN_ZIPC >/dev/null 2>&1
-  mv epgc/encocoin-cli .
-  mv epgc/encocoind .
+  tar jxvf $COIN_ZIPC >/dev/null 2>&1
+  mv epgc/epgc-cli .
+  mv epgc/epgc-tx .
+  mv epgc/epgcd .
   rm -fr epgc/
   compile_error
 #   cd linux
@@ -139,7 +141,7 @@ EOF
 #   sleep 3
   systemctl start $COIN_NAME.service
   systemctl enable $COIN_NAME.service >/dev/null 2>&1
-  echo -e "\n${GREEN}Encocoin PoS (XNK-PoS) Service Status\n${NC}"
+  echo -e "\n${GREEN}Encocoinplus EPG - Encocoin Payment Guarantee Service Status\n${NC}"
   systemctl status $COIN_NAME.service
   echo -e "\n${BLUE}=======================================================================================================${NC}\n"
 
@@ -246,20 +248,9 @@ masternode=1
 masternodeaddr=$NODEIP:$COIN_PORT
 masternodeprivkey=$COINKEY
 #ADDNODES
-addnode=136.144.171.201:12044
-addnode=167.86.90.167:12044
-addnode=51.15.253.90:12044
-addnode=194.160.80.211:12044
-addnode=207.180.218.133:12044
-addnode=108.61.78.52:12044
-addnode=140.82.13.75:12044
-addnode=144.202.14.77:12044
-addnode=164.68.112.217:12044
-addnode=45.77.123.172:12044
-addnode=149.248.10.145:12044
-addnode=207.246.108.24:12044
-addnode=45.76.61.66:12044
-addnode=149.28.94.156:12044
+addnode=134.255.218.45:29442
+addnode=92.42.46.121:29442
+addnode=134.255.234.59:29442
 EOF
 }
 
