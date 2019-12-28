@@ -1,7 +1,7 @@
 # EPS masternode installation script
 EPS Masternode Install Script
 
-**_These scripts are tested on Hetzner VPS with Ubuntu 16.04 operating systems. Although it should work with all VPS hosts you should test it before using it._**
+**_These scripts are tested on a FRESH Hetzner VPS with Ubuntu 16.04 and Ubuntu 18.04 operating systems. Although it should work with all VPS hosts you should test it before using it. The server MUST be FRESH since Ubuntu is giving errors when installing dependencies again if they are already installed._**
 
 ### Installation of EPS Masternode and usage of script
 
