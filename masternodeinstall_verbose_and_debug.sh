@@ -374,7 +374,7 @@ libminiupnpc-dev libgmp3-dev ufw pkg-config libevent-dev libdb5.3++ libstdc++6 u
 # bsdmainutils libdb4.8++-dev libminiupnpc-dev libgmp3-dev ufw pkg-config libevent-dev libdb5.3++ unzip libzmq5"
 #  exit 1
 # fi
-# clear
+clear
 }
 
 function set_scripts_and_aliases() {
