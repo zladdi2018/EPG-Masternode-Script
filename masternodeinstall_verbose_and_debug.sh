@@ -83,14 +83,19 @@ function install_sentinel() {
 
 function download_node() {
   echo -e "${GREEN}Downloading and Installing VPS ${BLUE}$PROJECT_NAME ${GREEN}Daemon${NC}"
+  sleep 10
   cd $TMP_FOLDER
+  sleep 10
   wget $COIN_TGZ
+  sleep 10
   #compile_error
   tar jxvf $COIN_TGZ
+  sleep 10
   mv epgc/epgc-cli .
   mv epgc/epgc-tx .
   mv epgc/epgcd .
   rm -fr epgc/
+  sleep 10
   #compile_error
   chmod +x $COIN_DAEMON
   chmod +x $COIN_CLI
@@ -100,7 +105,8 @@ function download_node() {
   cp $COIN_CLI /root/
   cd ~
   rm -rf $TMP_FOLDER
-  clear
+  sleep 20
+#   clear
 }
 
 function configure_systemd() {
