@@ -6,9 +6,11 @@ CONFIGFOLDER='/root/.epgc'
 COIN_DAEMON='epgcd'
 COIN_CLI='epgc-cli'
 COIN_PATH='/usr/local/bin/'
-if [[ $(lsb_release -d) != *16.04* ]]; then
+OS_VERSION=$(lsb_release -d)
+echo "You are running "$OS_VERSION
+if [[ $(lsb_release -d) == *16.04* ]]; then
 	COIN_TGZP='https://github.com/bedri/EPS-Masternode-Script/raw/master/epgc_ubuntu_16.04_binaries.tar.bz2'
-elif [[ $(lsb_release -d) != *18.04* ]]; then
+elif [[ $(lsb_release -d) == *18.04* ]]; then
 	COIN_TGZP='https://github.com/bedri/EPS-Masternode-Script/raw/master/epgc_ubuntu_18.04_binaries.tar.bz2'
 fi
 COIN_TGZ=$(echo $COIN_TGZP | awk -F'/' '{print $NF}')
