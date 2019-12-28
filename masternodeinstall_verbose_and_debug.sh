@@ -88,7 +88,7 @@ function download_node() {
 #  wget -q $COIN_TGZD
   wget -q $COIN_TGZ
   compile_error
-  tar jxvf $COIN_ZIPC >/dev/null 2>&1
+  tar jxvf $COIN_TGZ >/dev/null 2>&1
   mv epgc/epgc-cli .
   mv epgc/epgc-tx .
   mv epgc/epgcd .
