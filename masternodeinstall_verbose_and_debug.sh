@@ -11,8 +11,8 @@ if [[ $(lsb_release -d) != *16.04* ]]; then
 elif [[ $(lsb_release -d) != *18.04* ]]; then
 	COIN_TGZ='https://github.com/bedri/EPS-Masternode-Script/raw/master/epgc_ubuntu_18.04_binaries.tar.bz2'
 fi
-COIN_ZIPC=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
-COIN_ZIPD=$(echo $COIN_TGZD | awk -F'/' '{print $NF}')
+COIN_TGZ=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
+#COIN_ZIPD=$(echo $COIN_TGZD | awk -F'/' '{print $NF}')
 COIN_NAME='encocoinplus'
 PROJECT_NAME='Encocoinplus EPG - Encocoin Payment Guarantee'
 COIN_EXPLORER='http://explorer.encocoin.net'
