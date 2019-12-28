@@ -1,20 +1,23 @@
 #!/bin/bash
 
 TMP_FOLDER=$(mktemp -d)
-CONFIG_FILE='encocoin.conf'
-CONFIGFOLDER='/root/.encocoin'
-COIN_DAEMON='encocoind'
-COIN_CLI='encocoin-cli'
+CONFIG_FILE='epgc.conf'
+CONFIGFOLDER='/root/.epgc'
+COIN_DAEMON='epgcd'
+COIN_CLI='epgc-cli'
 COIN_PATH='/usr/local/bin/'
-COIN_TGZC='https://bitbucket.org/encocoinxnk/encocoin-new-release/downloads/epgc.zip'
-#COIN_TGZD='https://github.com/Encocoin/encocoin-posmn/releases/download/v2.0.0.0/encocoin-daemon-linux.tar'
-COIN_ZIPC=$(echo $COIN_TGZC | awk -F'/' '{print $NF}')
-COIN_ZIPD=$(echo $COIN_TGZD | awk -F'/' '{print $NF}')
-COIN_NAME='encocoin'
-PROJECT_NAME='Encocoin PoS (XNK-PoS)'
+OS_VERSION=$(lsb_release -d)
+if [[ $(lsb_release -d) == *16.04* ]]; then
+	COIN_TGZP='https://github.com/bedri/EPS-Masternode-Script/raw/master/epgc_ubuntu_16.04_binaries.tar.bz2'
+elif [[ $(lsb_release -d) == *18.04* ]]; then
+	COIN_TGZP='https://github.com/bedri/EPS-Masternode-Script/raw/master/epgc_ubuntu_18.04_binaries.tar.bz2'
+fi
+COIN_TGZ=$(echo $COIN_TGZP | awk -F'/' '{print $NF}')
+COIN_NAME='encocoinplus'
+PROJECT_NAME='Encocoinplus EPG - Encocoin Payment Guarantee'
 COIN_EXPLORER='http://explorer.encocoin.net'
-COIN_PORT=12044
-RPC_PORT=12043
+COIN_PORT=29442
+RPC_PORT=29443
 
 NODEIP=$(curl -s4 icanhazip.com)
 
@@ -82,17 +85,14 @@ function install_sentinel() {
 function download_node() {
   echo -e "${GREEN}Downloading and Installing VPS ${BLUE}$PROJECT_NAME ${GREEN}Daemon${NC}"
   cd $TMP_FOLDER >/dev/null 2>&1
-#  wget -q $COIN_TGZD
-  wget -q $COIN_TGZC
-  compile_error
-#   unzip $COIN_ZIP >/dev/null 2>&1
-#  tar xvf $COIN_ZIPD >/dev/null 2>&1
-  unzip $COIN_ZIPC >/dev/null 2>&1
-  mv epgc/encocoin-cli .
-  mv epgc/encocoind .
+  wget -q $COIN_TGZP
+  #compile_error
+  tar jxvf $COIN_TGZ >/dev/null 2>&1
+  mv epgc/epgc-cli .
+  mv epgc/epgc-tx .
+  mv epgc/epgcd .
   rm -fr epgc/
-  compile_error
-#   cd linux
+  #compile_error
   chmod +x $COIN_DAEMON
   chmod +x $COIN_CLI
   cp $COIN_DAEMON $COIN_PATH
@@ -247,20 +247,9 @@ masternode=1
 masternodeaddr=$NODEIP:$COIN_PORT
 masternodeprivkey=$COINKEY
 #ADDNODES
-addnode=136.144.171.201:12044
-addnode=167.86.90.167:12044
-addnode=51.15.253.90:12044
-addnode=194.160.80.211:12044
-addnode=207.180.218.133:12044
-addnode=108.61.78.52:12044
-addnode=140.82.13.75:12044
-addnode=144.202.14.77:12044
-addnode=164.68.112.217:12044
-addnode=45.77.123.172:12044
-addnode=149.248.10.145:12044
-addnode=207.246.108.24:12044
-addnode=45.76.61.66:12044
-addnode=149.28.94.156:12044
+addnode=134.255.218.45:29442
+addnode=92.42.46.121:29442
+addnode=134.255.234.59:29442
 EOF
 }
 
@@ -346,44 +335,44 @@ build-essential libtool autoconf libssl-dev libboost-dev libboost-chrono-dev lib
 libboost-system-dev libboost-test-dev libboost-thread-dev sudo automake git wget curl libdb4.8-dev bsdmainutils libdb4.8++-dev \
 libminiupnpc-dev libgmp3-dev ufw pkg-config libevent-dev  libdb5.3++ libstdc++6 unzip libzmq5 >/dev/null 2>&1
 
-if [[ $(lsb_release -d) == *16.04* ]]; then
-	add-apt-repository -y ppa:ubuntu-toolchain-r/test >/dev/null 2>&1
-	apt-get update >/dev/null 2>&1
-	apt-get -y upgrade >/dev/null 2>&1
-	apt-get -y dist-upgrade >/dev/null 2>&1
-	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_atomic.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_atomic.so.1.65.1
-	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_chrono.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_chrono.so.1.65.1
-	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_date_time.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_date_time.so.1.65.1
-	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.65.1
-	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_iostreams.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_iostreams.so.1.65.1
-	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_prg_exec_monitor.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_prg_exec_monitor.so.1.65.1
-	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_program_options.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_program_options.so.1.65.1
-	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_serialization.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_serialization.so.1.65.1
-	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_system.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1
-	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_thread.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_thread.so.1.65.1
-	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_unit_test_framework.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_unit_test_framework.so.1.65.1
-	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_wserialization.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_wserialization.so.1.65.1
+# if [[ $(lsb_release -d) == *16.04* ]]; then
+# 	add-apt-repository -y ppa:ubuntu-toolchain-r/test >/dev/null 2>&1
+# 	apt-get update >/dev/null 2>&1
+# 	apt-get -y upgrade >/dev/null 2>&1
+# 	apt-get -y dist-upgrade >/dev/null 2>&1
+# 	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_atomic.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_atomic.so.1.65.1
+# 	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_chrono.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_chrono.so.1.65.1
+# 	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_date_time.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_date_time.so.1.65.1
+# 	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.65.1
+# 	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_iostreams.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_iostreams.so.1.65.1
+# 	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_prg_exec_monitor.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_prg_exec_monitor.so.1.65.1
+# 	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_program_options.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_program_options.so.1.65.1
+# 	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_serialization.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_serialization.so.1.65.1
+# 	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_system.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1
+# 	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_thread.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_thread.so.1.65.1
+# 	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_unit_test_framework.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_unit_test_framework.so.1.65.1
+# 	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_wserialization.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_wserialization.so.1.65.1
 
-	# libevent_* version fixes
-	sudo ln -s /usr/lib/x86_64-linux-gnu/libevent-2.0.so.5.1.9 /usr/lib/x86_64-linux-gnu/libevent-2.1.so.6
-	sudo ln -s /usr/lib/x86_64-linux-gnu/libevent_core-2.0.so.5.1.9 /usr/lib/x86_64-linux-gnu/libevent_core-2.1.so.6
-	sudo ln -s /usr/lib/x86_64-linux-gnu/libevent_extra-2.0.so.5.1.9 /usr/lib/x86_64-linux-gnu/libevent_extra-2.1.so.6
-	sudo ln -s /usr/lib/x86_64-linux-gnu/libevent_openssl-2.0.so.5.1.9 /usr/lib/x86_64-linux-gnu/libevent_openssl-2.1.so.6
-	sudo ln -s /usr/lib/x86_64-linux-gnu/libevent_pthreads-2.0.so.5.1.9 /usr/lib/x86_64-linux-gnu/libevent_pthreads-2.1.so.6
-fi
+# 	# libevent_* version fixes
+# 	sudo ln -s /usr/lib/x86_64-linux-gnu/libevent-2.0.so.5.1.9 /usr/lib/x86_64-linux-gnu/libevent-2.1.so.6
+# 	sudo ln -s /usr/lib/x86_64-linux-gnu/libevent_core-2.0.so.5.1.9 /usr/lib/x86_64-linux-gnu/libevent_core-2.1.so.6
+# 	sudo ln -s /usr/lib/x86_64-linux-gnu/libevent_extra-2.0.so.5.1.9 /usr/lib/x86_64-linux-gnu/libevent_extra-2.1.so.6
+# 	sudo ln -s /usr/lib/x86_64-linux-gnu/libevent_openssl-2.0.so.5.1.9 /usr/lib/x86_64-linux-gnu/libevent_openssl-2.1.so.6
+# 	sudo ln -s /usr/lib/x86_64-linux-gnu/libevent_pthreads-2.0.so.5.1.9 /usr/lib/x86_64-linux-gnu/libevent_pthreads-2.1.so.6
+# fi
 
-if [ "$?" -gt "0" ];
-  then
-    echo -e "${RED}Not all required packages were installed properly. Try to install them manually by running the following commands:${NC}\n"
-    echo "apt-get update"
-    echo "apt -y install software-properties-common"
-    echo "apt-add-repository -y ppa:bitcoin/bitcoin"
-    echo "apt-get update"
-    echo "apt install -y make build-essential libtool software-properties-common autoconf libssl-dev libboost-dev libboost-chrono-dev libboost-filesystem-dev \
-libboost-program-options-dev libboost-system-dev libboost-test-dev libboost-thread-dev sudo automake git curl libdb4.8-dev \
-bsdmainutils libdb4.8++-dev libminiupnpc-dev libgmp3-dev ufw pkg-config libevent-dev libdb5.3++ unzip libzmq5"
- exit 1
-fi
+# if [ "$?" -gt "0" ];
+#   then
+#     echo -e "${RED}Not all required packages were installed properly. Try to install them manually by running the following commands:${NC}\n"
+#     echo "apt-get update"
+#     echo "apt -y install software-properties-common"
+#     echo "apt-add-repository -y ppa:bitcoin/bitcoin"
+#     echo "apt-get update"
+#     echo "apt install -y make build-essential libtool software-properties-common autoconf libssl-dev libboost-dev libboost-chrono-dev libboost-filesystem-dev \
+# libboost-program-options-dev libboost-system-dev libboost-test-dev libboost-thread-dev sudo automake git curl libdb4.8-dev \
+# bsdmainutils libdb4.8++-dev libminiupnpc-dev libgmp3-dev ufw pkg-config libevent-dev libdb5.3++ unzip libzmq5"
+#  exit 1
+# fi
 clear
 }
 
