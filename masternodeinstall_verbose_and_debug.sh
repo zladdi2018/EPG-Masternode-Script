@@ -90,11 +90,11 @@ function download_node() {
   if [[ $(lsb_release -d) == *16.04* ]]; then
 	tar zxvf $COIN_TGZ
   elif [[ $(lsb_release -d) == *18.04* ]]; then
+	unzip $COIN_TGZ
     mv epg-1.0.0-ubuntu18.04-daemon/epgc-cli .
     mv epg-1.0.0-ubuntu18.04-daemon/epgc-tx .
     mv epg-1.0.0-ubuntu18.04-daemon/epgcd .
     rm -fr epg-1.0.0-ubuntu18.04-daemon/
-	unzip $COIN_TGZ
   fi
 # tar jxvf $COIN_TGZ
 #   mv epgc/epgc-cli .
