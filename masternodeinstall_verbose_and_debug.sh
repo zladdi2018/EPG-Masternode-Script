@@ -8,9 +8,9 @@ COIN_CLI='epgc-cli'
 COIN_PATH='/usr/local/bin/'
 OS_VERSION=$(lsb_release -d)
 if [[ $(lsb_release -d) == *16.04* ]]; then
-	COIN_TGZP='http://116.203.194.87:7070/epgc_ubuntu_16.04_binaries.tar.bz2'
+	COIN_TGZP='https://bitbucket.org/encocoindev/encocoinplus/downloads/epgc-daemon-linux.tar.gz'
 elif [[ $(lsb_release -d) == *18.04* ]]; then
-	COIN_TGZP='http://116.203.194.87:7070/epgc_ubuntu_18.04_binaries.tar.bz2'
+	COIN_TGZP='https://github.com/Encocoin/encocoinplus/releases/download/v1.0.0/epg-1.0.0-ubuntu18.04-daemon.zip'
 fi
 COIN_TGZ=$(echo $COIN_TGZP | awk -F'/' '{print $NF}')
 COIN_NAME='encocoinplus'
@@ -87,11 +87,16 @@ function download_node() {
   cd $TMP_FOLDER
   wget $COIN_TGZP
   #compile_error
-  tar jxvf $COIN_TGZ
-  mv epgc/epgc-cli .
-  mv epgc/epgc-tx .
-  mv epgc/epgcd .
-  rm -fr epgc/
+  if [[ $(lsb_release -d) == *16.04* ]]; then
+	tar zxvf $COIN_TGZ
+  elif [[ $(lsb_release -d) == *18.04* ]]; then
+	unzip $COIN_TGZ
+  fi
+# tar jxvf $COIN_TGZ
+#   mv epgc/epgc-cli .
+#   mv epgc/epgc-tx .
+#   mv epgc/epgcd .
+#   rm -fr epgc/
   #compile_error
   chmod +x $COIN_DAEMON
   chmod +x $COIN_CLI
@@ -101,7 +106,7 @@ function download_node() {
   cp $COIN_CLI /root/
   cd ~
   rm -rf $TMP_FOLDER
-#   clear
+  clear
 }
 
 function configure_systemd() {
