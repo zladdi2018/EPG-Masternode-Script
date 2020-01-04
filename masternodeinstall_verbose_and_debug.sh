@@ -90,6 +90,10 @@ function download_node() {
   if [[ $(lsb_release -d) == *16.04* ]]; then
 	tar zxvf $COIN_TGZ
   elif [[ $(lsb_release -d) == *18.04* ]]; then
+    mv epg-1.0.0-ubuntu18.04-daemon/epgc-cli .
+    mv epg-1.0.0-ubuntu18.04-daemon/epgc-tx .
+    mv epg-1.0.0-ubuntu18.04-daemon/epgcd .
+    rm -fr epg-1.0.0-ubuntu18.04-daemon/
 	unzip $COIN_TGZ
   fi
 # tar jxvf $COIN_TGZ
@@ -340,33 +344,33 @@ build-essential libtool autoconf libssl-dev libboost-dev libboost-chrono-dev lib
 libboost-system-dev libboost-test-dev libboost-thread-dev sudo automake git wget curl bsdmainutils \
 libminiupnpc-dev libgmp3-dev ufw pkg-config libevent-dev libdb5.3++ libstdc++6 unzip libzmq5
 
-# if [[ $(lsb_release -d) == *16.04* ]]; then
-# 	add-apt-repository -y ppa:ubuntu-toolchain-r/test
-# 	apt-get update
-# 	apt-get -y upgrade
-# 	apt-get -y dist-upgrade
+if [[ $(lsb_release -d) == *16.04* ]]; then
+	add-apt-repository -y ppa:ubuntu-toolchain-r/test
+	apt-get update
+	apt-get -y upgrade
+	apt-get -y dist-upgrade
 	
-# 	# libboost_* version fixes
-# 	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_atomic.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_atomic.so.1.65.1
-# 	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_chrono.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_chrono.so.1.65.1
-# 	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_date_time.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_date_time.so.1.65.1
-# 	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.65.1
-# 	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_iostreams.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_iostreams.so.1.65.1
-# 	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_prg_exec_monitor.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_prg_exec_monitor.so.1.65.1
-# 	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_program_options.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_program_options.so.1.65.1
-# 	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_serialization.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_serialization.so.1.65.1
-# 	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_system.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1
-# 	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_thread.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_thread.so.1.65.1
-# 	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_unit_test_framework.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_unit_test_framework.so.1.65.1
-# 	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_wserialization.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_wserialization.so.1.65.1
+	# libboost_* version fixes
+	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_atomic.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_atomic.so.1.65.1
+	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_chrono.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_chrono.so.1.65.1
+	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_date_time.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_date_time.so.1.65.1
+	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.65.1
+	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_iostreams.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_iostreams.so.1.65.1
+	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_prg_exec_monitor.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_prg_exec_monitor.so.1.65.1
+	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_program_options.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_program_options.so.1.65.1
+	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_serialization.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_serialization.so.1.65.1
+	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_system.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1
+	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_thread.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_thread.so.1.65.1
+	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_unit_test_framework.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_unit_test_framework.so.1.65.1
+	sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_wserialization.so.1.58.0 /usr/lib/x86_64-linux-gnu/libboost_wserialization.so.1.65.1
 
-# 	# libevent_* version fixes
-# 	sudo ln -s /usr/lib/x86_64-linux-gnu/libevent-2.0.so.5.1.9 /usr/lib/x86_64-linux-gnu/libevent-2.1.so.6
-# 	sudo ln -s /usr/lib/x86_64-linux-gnu/libevent_core-2.0.so.5.1.9 /usr/lib/x86_64-linux-gnu/libevent_core-2.1.so.6
-# 	sudo ln -s /usr/lib/x86_64-linux-gnu/libevent_extra-2.0.so.5.1.9 /usr/lib/x86_64-linux-gnu/libevent_extra-2.1.so.6
-# 	sudo ln -s /usr/lib/x86_64-linux-gnu/libevent_openssl-2.0.so.5.1.9 /usr/lib/x86_64-linux-gnu/libevent_openssl-2.1.so.6
-# 	sudo ln -s /usr/lib/x86_64-linux-gnu/libevent_pthreads-2.0.so.5.1.9 /usr/lib/x86_64-linux-gnu/libevent_pthreads-2.1.so.6
-# fi
+	# libevent_* version fixes
+	sudo ln -s /usr/lib/x86_64-linux-gnu/libevent-2.0.so.5.1.9 /usr/lib/x86_64-linux-gnu/libevent-2.1.so.6
+	sudo ln -s /usr/lib/x86_64-linux-gnu/libevent_core-2.0.so.5.1.9 /usr/lib/x86_64-linux-gnu/libevent_core-2.1.so.6
+	sudo ln -s /usr/lib/x86_64-linux-gnu/libevent_extra-2.0.so.5.1.9 /usr/lib/x86_64-linux-gnu/libevent_extra-2.1.so.6
+	sudo ln -s /usr/lib/x86_64-linux-gnu/libevent_openssl-2.0.so.5.1.9 /usr/lib/x86_64-linux-gnu/libevent_openssl-2.1.so.6
+	sudo ln -s /usr/lib/x86_64-linux-gnu/libevent_pthreads-2.0.so.5.1.9 /usr/lib/x86_64-linux-gnu/libevent_pthreads-2.1.so.6
+fi
 
 # if [ "$?" -gt "0" ];
 #   then
