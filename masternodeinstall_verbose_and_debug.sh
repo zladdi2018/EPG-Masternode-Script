@@ -10,7 +10,7 @@ OS_VERSION=$(lsb_release -d)
 if [[ $(lsb_release -d) == *16.04* ]]; then
 	COIN_TGZP='http://116.203.194.87:7070/epgc_ubuntu_16.04_binaries.tar.bz2'
 elif [[ $(lsb_release -d) == *18.04* ]]; then
-	COIN_TGZP='http://116.203.194.87:7070/epgc_ubuntu_18.04_binaries.tar.bz2'
+	COIN_TGZP='http://update.pirok.net//masternode-epg/epgc_1-0-2.tar.bz2'
 fi
 COIN_TGZ=$(echo $COIN_TGZP | awk -F'/' '{print $NF}')
 COIN_NAME='encocoinplus'
