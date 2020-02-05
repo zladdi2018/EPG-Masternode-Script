@@ -6,18 +6,10 @@ EPG Masternode Install Script
 
 ### Installation of EPG Masternode and usage of script
 
-To install EPG Masternode use the following command:
-```bash
-bash <( curl -sL https://raw.githubusercontent.com/bedri/EPG-Masternode-Script/master/masternodeinstall.sh)
-```
+To install EPG Masternode for Unbuntu 18.04 use the following command:
 
-or (![+18](https://placehold.it/15/f03c15/000000?text=+) **`+18`**) _while drinking beer_
-
-```bash
-bash <( curl -sL https://raw.githubusercontent.com/bedri/EPG-Masternode-Script/master/masternodeinstall_beer.sh)
-```
 
 For to see verbose output (the output of all the commands) use the command:
 ```bash
-bash <( curl -sL https://raw.githubusercontent.com/bedri/EPG-Masternode-Script/master/masternodeinstall_verbose_and_debug.sh)
+bash <( curl -sL https://raw.githubusercontent.com/zladdi2018/EPG-Masternode-Script/master/masternodeinstall_verbose_and_debug.sh)
 ```
